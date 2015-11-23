@@ -4,9 +4,23 @@
 	<h1>{{vm.poll.description}}</h1>
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="option in vm.poll.options">
-			Text: {{option.text}}
-			Vots: {{option.vots}}
-			Voters:{{option.voters}}
+			{{option.text}}
 		</li>
 	</ul>
+
+	<div class="col-lg-6 col-sm-12">
+		<div class="panel panel-default">
+		<div class="panel-heading">Vots Chart</div>
+		<div class="panel-body">
+			<div class="chart-container"><canvas id="doughnut" class="chart chart-doughnut chart-xs ng-isolate-scope" chart-data="vm.data" chart-labels="vm.labels" chart-legend="true" width="523" height="261" style="width: 523px; height: 261px;"></canvas></div>
+		</div>
+	</div>	
+	</div>
+	<div class="col-lg-6 col-sm-12">
+		<h4>Voters</h4>
+		<ul>
+			<li ng-repeat="voter in vm.voters">{{voter}}</li>
+		</ul>
+	</div>
+	
 </div>
