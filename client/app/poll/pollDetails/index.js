@@ -5,7 +5,7 @@ angular.module('votingAppApp')
         $stateProvider
             .state('pollDetails', {
                 url: '/myPolls/:pollId',
-                templateUrl: 'app/poll/pollDetails/PollDetails.html',
+                templateUrl: 'app/poll/pollDetails/pollDetails.html',
                 controller: 'PollDetailsCtrl as vm'
             });
     });
