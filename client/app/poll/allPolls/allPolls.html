@@ -1,0 +1,18 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+	
+	<h1>All Polls </h1>
+	
+		<ul class="list-group">
+			<li class="list-group-item row" ng-repeat="poll in vm.allPolls">
+				<div class="col-xs-10 col-md-11 col-lg-11"><strong><a ui-sref="pollDetails({pollId:poll._id})">  {{poll.description}}</a></strong></div>
+				<div class="col-xs-2 col-md-1 col-lg-1 options">
+					<a  ui-sref="takePoll({pollId:poll._id})" class="btn btn-success">Take Poll</a>
+				</div>
+				
+			</li>
+			
+		</ul>
+		
+	
+</div>
