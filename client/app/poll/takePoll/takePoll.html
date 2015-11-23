@@ -2,9 +2,9 @@
 <div class="container">
 	
 	<h1>{{vm.poll.description}}</h1>
-	<form action="">
+	<form>
 		<label class="form-control" for="{{opt.text}}" ng-repeat="opt in vm.poll.options">
-			<input  type="radio" ng-model="vm.choice" ng-value="opt.text" id="{{opt.text}}" name="choice">
+			<input  type="radio" ng-model="vm.choice" value="{{opt._id}}" id="{{opt.text}}" name="choice">
 			{{opt.text}}
 		</label>
 		<button class="btn btn-success" ng-click="vm.takePoll()">Vote</button>

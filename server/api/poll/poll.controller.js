@@ -76,7 +76,7 @@ exports.create = function(req, res) {
                 return handleError(res, err);
             }
             //add the options
-            addOptions(options, poll);
+            addOptions(options, poll, res);
             return res.status(201).json(poll);
         });
     });
@@ -115,7 +115,7 @@ function findLatestPollId(callback) {
 
 }
 
-function addOptions(options, poll) {
+function addOptions(options, poll, res) {
     Option.collection.insert(options, function(err, docs) {
         if (err) {
             console.log(err);
@@ -128,7 +128,6 @@ function addOptions(options, poll) {
                 if (err) {
                     return handleError(res, err);
                 }
-                console.log(poll);
             });
         }
     });

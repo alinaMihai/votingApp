@@ -11,47 +11,45 @@
 
 var _ = require('lodash');
 var Option = require('./option.model');
+var User = require('../user/user.model');
+exports.registerPoll = function(req, res) {
+    var userEmail = req.user.email;
 
-// Get list of all options
-exports.index = function(req, res) {
-    Option.find(function(err, options) {
+    var query = Option.findOne({});
+    query.where('_id', req.params.id);
+    query.exec(function(err, option) {
         if (err) {
             return handleError(res, err);
         }
-        return res.status(200).json(options);
-    });
-};
-
-
-// Creates a new option in the DB.
-exports.create = function(optionObj) {
-    return findLatestOptionId(function(option) {
-
-        var latestOptionId = option ? option._id : 0;
-
-        var optionId = latestOptionId + 1;
-
-        optionObj._id = optionId;
-        return Option.create(optionObj, function(err, option) {
+        var newVoter = checkUniqueVoter(userEmail, option.voters);
+        if (!newVoter) {
+            return res.status(404).send('You cannot vote this poll more than once');
+        }
+        option.vots = option.vots ? option.vots + 1 : 1;
+        option.voters.push(userEmail);
+        option.save(function(err) {
             if (err) {
                 return handleError(res, err);
             }
-            return option;
+            return res.status(200).send('No Content');
         });
+
     });
 };
 
 function handleError(res, err) {
+    console.log(err);
     return res.status(500).send(err);
 }
 
-function findLatestOptionId(callback) {
-    Option.findOne({}, {}, {
-        sort: {
-            '_id': 'descending'
-        }
-    }, function(err, option) {
-        callback.call(null, option);
-    });
+function checkUniqueVoter(userEmail, voters) {
+    var isPresent = false;
 
+    for (var i = 0; i < voters.length; i++) {
+        if (voters[i] === userEmail) {
+            isPresent = true;
+            break;
+        }
+    }
+    return isPresent ? false : true;
 }

@@ -11,6 +11,9 @@
     function AllPollsController(PollService) {
         var vm = this;
         vm.allPolls = [];
+        vm.isAreadyTaken = isAreadyTaken;
+        var storedPolls = localStorage["polls"] ? JSON.parse(localStorage["polls"]) : [];
+
         activate();
 
         ////////////////
@@ -19,6 +22,13 @@
             PollService.getAllPolls().then(function(polls) {
                 vm.allPolls = polls;
             });
+        }
+
+        function isAreadyTaken(pollId) {
+
+            if (storedPolls.indexOf(pollId) !== -1) {
+                return true;
+            }
         }
     }
 })();

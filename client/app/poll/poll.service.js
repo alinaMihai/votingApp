@@ -14,6 +14,7 @@
         this.deletePoll = deletePoll;
         this.getPoll = getPoll;
         this.getAllPolls = getAllPolls;
+        this.takePoll = takePoll;
 
         ////////////////
 
@@ -64,6 +65,17 @@
             $http.delete('/api/polls/' + poll._id).then(function(response) {
                 deferred.resolve();
                 logger.success("Poll successfully deleted", null, "Poll Deleted");
+            });
+            return deferred.promise;
+        }
+
+        function takePoll(optionId) {
+            var deferred = $q.defer();
+            $http.post('/api/options/' + optionId).then(function(response) {
+                deferred.resolve();
+                logger.success("Thank you for taking this poll", null, "Choice registered");
+            }, function(error) {
+                console.log(error);
             });
             return deferred.promise;
         }
