@@ -7,7 +7,7 @@ Features:
 - Take polls made by you or other app users (only once and if you're authenticated);
 - View poll results, also in graph form 
 - Share take poll url with other people
-- See all app polls as an authenticated or nonauthenticated user;
+- See and search through all app polls as an authenticated or unauthenticated user;
 
 Technologies:
 - Angular JS
