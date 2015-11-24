@@ -21,19 +21,19 @@ exports.registerPoll = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        var newVoter = checkUniqueVoter(userEmail, option.voters);
-        if (!newVoter) {
-            return res.status(404).send('You cannot vote this poll more than once');
-        }
-        option.vots = option.vots ? option.vots + 1 : 1;
-        option.voters.push(userEmail);
-        option.save(function(err) {
-            if (err) {
-                return handleError(res, err);
+        getAllPollOptions(option.poll).then(function(options) {
+            var newVoter = checkUniqueVoter(options, userEmail);
+            if (!newVoter) {
+                return res.status(400).send('You cannot take poll twice')
             }
-            userAddPoll(userEmail, option.poll);
-
-            return res.status(200).send('No Content');
+            option.vots = option.vots ? option.vots + 1 : 1;
+            option.voters.push(userEmail);
+            option.save(function(err) {
+                if (err) {
+                    return handleError(res, err);
+                }
+                return res.status(200).send('No Content');
+            });
         });
 
     });
@@ -44,28 +44,20 @@ function handleError(res, err) {
     return res.status(500).send(err);
 }
 
-function checkUniqueVoter(userEmail, voters) {
-    var isPresent = false;
+function getAllPollOptions(pollId) {
+    var voters = [];
+    var query = Option.find({});
+    query.where('poll', pollId);
+    return query.exec(function(err, options) {});
+}
 
-    for (var i = 0; i < voters.length; i++) {
-        if (voters[i] === userEmail) {
+function checkUniqueVoter(options, userEmail) {
+    var isPresent;
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].voters.indexOf(userEmail) !== -1) {
             isPresent = true;
             break;
         }
-    }
+    };
     return isPresent ? false : true;
-}
-
-function userAddPoll(userEmail, poll) {
-    var query = User.findOne({});
-    query.where('email', userEmail);
-    query.exec(function(err, user) {
-        console.log(user);
-        user.polls.push(poll);
-        user.save(function(err) {
-            if (err) {
-                console.log(err);
-            }
-        });
-    });
 }

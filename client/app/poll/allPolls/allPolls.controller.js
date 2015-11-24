@@ -26,8 +26,7 @@
                 vm.allPolls = polls;
             });
             console.log(currentUser);
-        }
-
+}
         function isAreadyTaken(pollId) {
 
             if (storedPolls.indexOf(pollId) !== -1) {

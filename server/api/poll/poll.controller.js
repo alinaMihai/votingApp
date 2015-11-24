@@ -12,6 +12,7 @@
 var _ = require('lodash');
 var Poll = require('./poll.model');
 var Option = require('../option/option.model');
+var User = require('../user/user.model');
 
 // Get list of all polls
 exports.index = function(req, res) {
@@ -90,7 +91,13 @@ exports.destroy = function(req, res) {
         if (!poll) {
             return res.status(404).send('Not Found');
         }
-        //todo: delete options of poll
+        //delete options of poll
+        Option.find({
+            'poll': poll._id
+        }).remove(function(err) {
+            console.log(err);
+        });
+        removePollFromUserPolls(poll._id, poll.user);
         poll.remove(function(err) {
             if (err) {
                 return handleError(res, err);
@@ -99,6 +106,21 @@ exports.destroy = function(req, res) {
         });
     });
 };
+
+function removePollFromUserPolls(pollId, userEmail) {
+    User.update({
+        'email': userEmail
+    }, {
+        $pull: {
+            'polls': pollId
+        }
+    }, function(err) {
+        if (err) {
+            console.log(err);
+
+        }
+    });
+}
 
 function handleError(res, err) {
     console.log(err);

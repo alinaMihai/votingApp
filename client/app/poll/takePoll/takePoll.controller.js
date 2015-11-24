@@ -34,7 +34,8 @@
                 var storedPolls = localStorage["polls"] ? JSON.parse(localStorage["polls"]) : [];
                 storedPolls.push(vm.poll._id);
                 localStorage["polls"] = JSON.stringify(storedPolls);
-
+            }, function(error) {
+                $state.go('allPolls');
             });
         }
     }
