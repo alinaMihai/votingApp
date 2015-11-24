@@ -90,6 +90,7 @@ exports.destroy = function(req, res) {
         if (!poll) {
             return res.status(404).send('Not Found');
         }
+        //todo: delete options of poll
         poll.remove(function(err) {
             if (err) {
                 return handleError(res, err);

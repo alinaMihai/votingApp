@@ -15,6 +15,9 @@ var UserSchema = new Schema({
         type: String,
         default: 'user'
     },
+    polls: [{
+        type: Number
+    }],
     hashedPassword: String,
     provider: String,
     salt: String,

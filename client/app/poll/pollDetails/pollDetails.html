@@ -1,10 +1,10 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div class="container">
 	
-	<h1>{{vm.poll.description}}</h1>
+	<h1>{{vm.poll.description}} <small>by {{vm.poll.user}}</small></h1>
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="option in vm.poll.options">
-			{{option.text}}
+			{{option.text}}  
 		</li>
 	</ul>
 

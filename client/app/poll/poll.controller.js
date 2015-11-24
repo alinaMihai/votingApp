@@ -41,7 +41,9 @@
             });
 
             modalInstance.result.then(function(data) {
-
+                data.options = data.options.filter(function(option) {
+                    return option.text !== "";
+                });
                 createPoll(data);
             }, function() {
                 // $log.info('Modal dismissed at: ' + new Date());

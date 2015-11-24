@@ -31,6 +31,8 @@ exports.registerPoll = function(req, res) {
             if (err) {
                 return handleError(res, err);
             }
+            userAddPoll(userEmail, option.poll);
+
             return res.status(200).send('No Content');
         });
 
@@ -52,4 +54,18 @@ function checkUniqueVoter(userEmail, voters) {
         }
     }
     return isPresent ? false : true;
+}
+
+function userAddPoll(userEmail, poll) {
+    var query = User.findOne({});
+    query.where('email', userEmail);
+    query.exec(function(err, user) {
+        console.log(user);
+        user.polls.push(poll);
+        user.save(function(err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+    });
 }

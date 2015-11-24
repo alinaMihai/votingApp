@@ -20,6 +20,7 @@ angular.module('votingAppApp')
 
         $scope.logout = function() {
             Auth.logout();
+            localStorage.removeItem('polls');
             $location.path('/login');
         };
 
