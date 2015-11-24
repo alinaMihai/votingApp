@@ -2,11 +2,17 @@
 <div class="container">
 	
 	<h1>{{vm.poll.description}}</h1>
-	<form>
-		<label class="form-control" for="{{opt.text}}" ng-repeat="opt in vm.poll.options">
+	<form >
+		<label  class="form-control optionLabel" for="{{opt.text}}" ng-repeat="opt in vm.poll.options">
 			<input  type="radio" ng-model="vm.choice" value="{{opt._id}}" id="{{opt.text}}" name="choice">
 			{{opt.text}}
 		</label>
-		<button class="btn btn-success" ng-click="vm.takePoll()">Vote</button>
+		<button class="btn btn-success btn-block" ng-click="vm.takePoll()" ng-disabled="!vm.choice">Vote</button>
 	</form>
 </div>
+<footer class="footer">
+  <div class="container">
+      <p>Voting App 2015@alinaMihai  powered by Angular Fullstack v2.1.1 </p>
+      <p>See source code on<a href="https://github.com/alinaMihai/votingApp"> Github</a></p>
+  </div>
+</footer>

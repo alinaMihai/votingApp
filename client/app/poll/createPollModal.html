@@ -2,17 +2,17 @@
 	<h3 class="modal-title">Create Poll</h3>
 </div>
 <div class="modal-body">
-	<form >
-		<div class="form-group">
-			<textarea name="description" ng-model="modalCtrl.data.description" id="" cols="30" rows="10" class="form-control" placeholder="Enter description"></textarea>
+	<form name="addPollForm" novalidate>
+		<div class="form-group" ng-class="{'has-error':addPollForm.description.$invalid &&addPollForm.description.$dirty}">
+			<textarea  name="description" ng-model="modalCtrl.data.description" id="" cols="30" rows="10" class="form-control" required placeholder="Enter description"></textarea>
 		</div>
 		<div class="form-group">
 			
-			<button class="btn btn-default" ng-click="modalCtrl.data.options.push({text:''})">Add Option</button>
-			
-			<div class="row" ng-repeat="option in modalCtrl.data.options">
-				<div class="col-xs-8"><input type="text" ng-model="option.text" class="form-control"></div>
-				<div class="col-xs-4"><span class="glyphicon glyphicon-remove" ng-click='modalCtrl.data.options.splice($index,1)'></span></div>
+			<button id="addPollOption" class="btn btn-default" ng-click="modalCtrl.data.options.push({text:''})">Add Option</button>
+			<br>
+			<div class="row" ng-repeat="option in modalCtrl.data.options" ng-class="{'has-error':addPollForm[$index].$invalid &&addPollForm[$index].$dirty}">
+				<div class="col-xs-8"><input type="text" ng-model="option.text" class="form-control" required name="{{$index}}"></div>
+				<div class="col-xs-4 deleteOption" ><span class="glyphicon glyphicon-remove" ng-click='modalCtrl.data.options.splice($index,1)'></span></div>
 			</div>
 			
 		</div>
@@ -22,6 +22,6 @@
 	
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary" type="button" ng-click="modalCtrl.ok()" >Create</button>
+	<button class="btn btn-primary" type="button" ng-click="modalCtrl.ok()" ng-disabled="addPollForm.$invalid || modalCtrl.data.options.length<=1">Create</button>
 	<button class="btn btn-warning" type="button" ng-click="modalCtrl.cancel()">Cancel</button>
 </div>

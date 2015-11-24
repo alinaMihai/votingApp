@@ -60,7 +60,7 @@ function checkUniqueVoter(options, userEmail) {
             isPresent = true;
             break;
         }
-    };
+    }
     return isPresent ? false : true;
 }
 

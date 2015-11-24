@@ -358,6 +358,7 @@ module.exports = function(grunt) {
                         '.htaccess',
                         'bower_components/**/*',
                         'assets/images/{,*/}*.{webp}',
+                        'assets/images/*',
                         'assets/fonts/**/*',
                         'index.html'
                     ]
@@ -656,7 +657,7 @@ module.exports = function(grunt) {
         'copy:dist',
         'cdnify',
         'cssmin',
-        // 'uglify',
+        'uglify',
         'rev',
         'usemin'
     ]);

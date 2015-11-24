@@ -3,13 +3,14 @@
 	
 	<h1>{{vm.poll.description}} <small>by {{vm.poll.user}}</small></h1>
 	<div ><a  class="btn btn-success" ng-click="vm.openCopyPollUrl('lg')">Invite others to take this poll </a></div>
+	<br>
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="option in vm.poll.options">
 			{{option.text}}  
 		</li>
 	</ul>
 
-	<div class="col-lg-6 col-sm-12">
+	<div class="col-sm-6">
 		<div class="panel panel-default">
 		<div class="panel-heading">Vots Chart</div>
 		<div class="panel-body">
@@ -17,7 +18,7 @@
 		</div>
 	</div>	
 	</div>
-	<div class="col-lg-6 col-sm-12">
+	<div class="col-sm-6">
 		<h4>Voters</h4>
 		<ul>
 			<li ng-repeat="voter in vm.voters">{{voter}}</li>
@@ -25,3 +26,9 @@
 	</div>
 	
 </div>
+<footer class="footer">
+  <div class="container">
+      <p>Voting App 2015@alinaMihai  powered by Angular Fullstack v2.1.1 </p>
+      <p>See source code on<a href="https://github.com/alinaMihai/votingApp"> Github</a></p>
+  </div>
+</footer>

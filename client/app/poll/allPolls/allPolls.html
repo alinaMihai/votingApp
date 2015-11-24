@@ -2,17 +2,25 @@
 <div class="container">
 	
 	<h1>All Polls </h1>
+	<div class="row">
+		<input type="text" class="form-control" ng-model="vm.filter" placeholder="search poll">
+		<br>
+	</div>
 	
-		<ul class="list-group">
-			<li class="list-group-item row" ng-repeat="poll in vm.allPolls">
-				<div class="col-xs-10 col-md-11 col-lg-11"><strong><a ui-sref="pollDetails({pollId:poll._id})">  {{poll.description}}</a></strong></div>
-				<div class="col-xs-2 col-md-1 col-lg-1 options">
-					<a  ui-sref="takePoll({pollId:poll._id})" class="btn btn-success" ng-disabled="!vm.isLoggedIn || vm.isAreadyTaken(poll._id)">Take Poll</a>
-				</div>
-				
-			</li>
+	<ul class="list-group">
+		<li class="list-group-item row" ng-repeat="poll in vm.allPolls | orderBy:'user' | filter:vm.filter">
+			<div class="col-xs-9 col-md-10 col-lg-10"><strong><a ui-sref="pollDetails({pollId:poll._id})">  {{poll.description}}</a></strong><br><small>by {{poll.user}}</small></div>
+			<div class="col-xs-3 col-md-2 col-lg-2">
+				<a  ui-sref="takePoll({pollId:poll._id})" class="btn btn-success" ng-disabled="!vm.isLoggedIn || vm.isAreadyTaken(poll._id)">Take Poll</a>
+			</div>
 			
-		</ul>
+		</li>
 		
-	
+	</ul>
 </div>
+<footer class="footer">
+  <div class="container">
+      <p>Voting App 2015@alinaMihai  powered by Angular Fullstack v2.1.1 </p>
+      <p>See source code on<a href="https://github.com/alinaMihai/votingApp"> Github</a></p>
+  </div>
+</footer>
