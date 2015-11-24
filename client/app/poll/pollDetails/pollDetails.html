@@ -2,6 +2,7 @@
 <div class="container">
 	
 	<h1>{{vm.poll.description}} <small>by {{vm.poll.user}}</small></h1>
+	<div ><a  class="btn btn-success" ng-click="vm.openCopyPollUrl('lg')">Invite others to take this poll </a></div>
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="option in vm.poll.options">
 			{{option.text}}  

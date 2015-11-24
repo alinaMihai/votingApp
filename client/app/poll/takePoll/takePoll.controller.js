@@ -5,14 +5,15 @@
         .module('votingAppApp')
         .controller('TakePollCtrl', TakePollController);
 
-    TakePollController.$inject = ['PollService', '$stateParams', '$state'];
+    TakePollController.$inject = ['PollService', '$stateParams', '$state', 'Auth'];
 
     /* @ngInject */
-    function TakePollController(PollService, $stateParams, $state) {
+    function TakePollController(PollService, $stateParams, $state, Auth) {
         var vm = this;
         vm.poll = {};
         vm.choice = {};
         vm.takePoll = takePoll;
+        var currentUser = Auth.getCurrentUser();
         activate();
 
         ////////////////
@@ -31,7 +32,7 @@
                     'pollId': vm.poll._id
                 });
                 //register poll in localstorage, don't allow user to take same poll twice
-                var storedPolls = localStorage["polls"] ? JSON.parse(localStorage["polls"]) : [];
+                var storedPolls = localStorage["polls"] ? JSON.parse(localStorage["polls"]) : currentUser.polls;
                 storedPolls.push(vm.poll._id);
                 localStorage["polls"] = JSON.stringify(storedPolls);
             }, function(error) {

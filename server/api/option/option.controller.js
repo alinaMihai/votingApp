@@ -12,6 +12,7 @@
 var _ = require('lodash');
 var Option = require('./option.model');
 var User = require('../user/user.model');
+
 exports.registerPoll = function(req, res) {
     var userEmail = req.user.email;
 
@@ -28,6 +29,7 @@ exports.registerPoll = function(req, res) {
             }
             option.vots = option.vots ? option.vots + 1 : 1;
             option.voters.push(userEmail);
+            addUserPoll(userEmail, option.poll);
             option.save(function(err) {
                 if (err) {
                     return handleError(res, err);
@@ -60,4 +62,14 @@ function checkUniqueVoter(options, userEmail) {
         }
     };
     return isPresent ? false : true;
+}
+
+function addUserPoll(userEmail, pollId) {
+    User.update({
+        'email': userEmail
+    }, {
+        $addToSet: {
+            'polls': pollId
+        }
+    }).exec();
 }

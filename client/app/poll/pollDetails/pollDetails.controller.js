@@ -5,13 +5,14 @@
         .module('votingAppApp')
         .controller('PollDetailsCtrl', PollDetailsController);
 
-    PollDetailsController.$inject = ['PollService', '$stateParams'];
+    PollDetailsController.$inject = ['PollService', '$stateParams', '$uibModal', '$location'];
 
     /* @ngInject */
-    function PollDetailsController(PollService, $stateParams) {
+    function PollDetailsController(PollService, $stateParams, $uibModal, $location) {
         var vm = this;
         vm.poll = {};
         vm.data = [];
+        vm.openCopyPollUrl = openCopyPollUrl;
         vm.labels = [];
         vm.voters = [];
 
@@ -35,6 +36,24 @@
                 voters.push(option.voters);
             });
             vm.voters = [].concat.apply([], voters);
+        }
+
+        function openCopyPollUrl(size) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/poll/pollDetails/urlTakePoll.html',
+                size: size,
+                controller: 'ModalInstanceCtrl as modalCtrl',
+                resolve: {
+                    data: function() {
+                        return {
+                            url: $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/takePoll/' + vm.poll._id
+
+                        };
+                    }
+                }
+            });
+
         }
     }
 })();

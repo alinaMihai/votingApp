@@ -75,9 +75,12 @@
                 deferred.resolve();
                 logger.success("Thank you for taking this poll", null, "Choice registered");
             }, function(error) {
-                console.log(error);
+                var errorMessage = error.data;
+                if (error.status === 401) {
+                    errorMessage = error.statusText + " please login to take poll";
+                }
                 deferred.reject();
-                logger.warning("You cannot take poll twice", null, "Warning");
+                logger.warning(errorMessage, null, "Warning");
             });
             return deferred.promise;
         }

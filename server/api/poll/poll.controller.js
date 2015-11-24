@@ -107,6 +107,7 @@ exports.destroy = function(req, res) {
     });
 };
 
+
 function removePollFromUserPolls(pollId, userEmail) {
     User.update({
         'email': userEmail
