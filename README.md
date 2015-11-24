@@ -8,6 +8,7 @@ Features:
 - View poll results, also in graph form 
 - Share take poll url with other people
 - See and search through all app polls as an authenticated or unauthenticated user;
+- Login with Google+ 
 
 Technologies:
 - Angular JS
